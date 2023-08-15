@@ -14,10 +14,23 @@ export class ShoppingListService {
 	}
 	
 	addIngredient(ingredient: Ingredient) {
-		console.log(ingredient);
 		this.ingredients.push(ingredient);
-		this.ingredientsChanged.emit(this.ingredients.slice());
+		this.updatedIngredientsListCopy(this.ingredients)
+	}
+	
+	addIngredients(ingredients: Ingredient[]) {
+		// Not! a lot of events!
+		// for (let ingredient of ingredients) {
+		// 	this.addIngredient(ingredient)
+		// }
+		this.ingredients.push(...ingredients)
+		this.updatedIngredientsListCopy(this.ingredients)
+	}
+	
+	updatedIngredientsListCopy(ingredients: Ingredient[]) {
+		this.ingredientsChanged.emit(ingredients.slice());
 	}
 	
 	
+
 }
