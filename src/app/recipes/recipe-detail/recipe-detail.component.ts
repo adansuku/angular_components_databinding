@@ -7,9 +7,16 @@ import { Recipe } from '../recipe.model'
 })
 export class RecipeDetailComponent implements OnInit {
   @Input() recipe: Recipe;
+  // dropdownOpen = false;
+  
   constructor() { }
 
   ngOnInit() {
   }
+  
+  // onShowContent() {
+  //   console.log("here")
+  // this.dropdownOpen = !this.dropdownOpen
+  // }
 
 }
