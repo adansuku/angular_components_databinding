@@ -63,29 +63,41 @@
 				</div>
 			</div> <!-- end namerow -->
 
+			<hr>
+			<div class="row">
+				<div class="col-xs-12 pull-right">
+					<button class="btn btn-success"
+						type="button"
+						(click)="onAddIngredient()">Add Ingredient</button>
+				</div>
+			</div>
+
+
 			<div class="row">
 				<div class="col-xs-12"
 					formArrayName="ingredients">
 
 					<div class="row"
+						style="margin-top: 10px"
 						*ngFor="let ingredientsControl of recipeForm.get('ingredients')['controls']; let i = index"
 						[formGroupName]="i">
-						<div class="col-xs-8">
+						<div class="p-2 bg-light border col-xs-8">
 							<input type="text"
 								class="form-control"
 								formControlName="name">
 						</div>
-						<div class="col-xs-2">
+						<div class="p-2 bg-light border col-xs-2">
 							<input type="text"
 								class="form-control"
 								formControlName="amount">
 						</div>
-						<div class="col-xs-2">
+						<div class=" p-2 bg-light border col-xs-2">
 							<button class="btn btn-danger">X</button>
 						</div>
 					</div>
 				</div>
 			</div><!-- en first row -->
+
 
 		</form>
 	</div>
