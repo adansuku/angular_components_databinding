@@ -51,8 +51,12 @@ export class RecipeService {
     this.shopingListService.addIngredients(ingredients)
   }
 
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1)
+    this.refreshRecipesListChanged();
+  }
 
-  refreshRecipesListChanged() {
+  private refreshRecipesListChanged() {
     this.recipesChanged.next(this.recipes.slice())
   }
 }

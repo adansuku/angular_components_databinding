@@ -39,7 +39,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     //   this.recipeForm.value['ingredients']
     // })
     const newRecipe = this.recipeForm.value
-    console.log(newRecipe)
 
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id, newRecipe)
