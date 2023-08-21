@@ -90,12 +90,14 @@
 								formControlName="name">
 						</div>
 						<div class="p-2 bg-light border col-xs-2">
-							<input type="text"
+							<input type="number"
 								class="form-control"
 								formControlName="amount">
 						</div>
 						<div class=" p-2 bg-light border col-xs-2">
-							<button class="btn btn-danger">X</button>
+							<button type="button"
+								class="btn btn-danger"
+								(click)="onRemoveIngredient(i)">X</button>
 						</div>
 					</div>
 				</div>
