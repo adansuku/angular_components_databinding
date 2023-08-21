@@ -30,6 +30,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       )
   }
 
+  onSubmit() {
+    console.log(this.recipeForm)
+    console.log(this.recipeForm.value)
+
+  }
+
   private initForm() {
     let recipeName = ''
     let recipeImagePath = ''
