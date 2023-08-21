@@ -33,12 +33,18 @@ export class ShoppingListService {
 		this.updatedIngredientsListCopy(this.ingredients)
 	}
 
-	updatedIngredientsListCopy(ingredients: Ingredient[]) {
-		this.ingredientsChanged.next(this.ingredients.slice());
-	}
-
 	updatedIngredient(index: number, newIngredient: Ingredient) {
 		this.ingredients[index] = newIngredient;
+		this.updatedIngredientsListCopy(this.ingredients)
+	}
+
+	deleteIngredient(index: number) {
+		this.ingredients.splice(index, 1);
+		this.updatedIngredientsListCopy(this.ingredients)
+	}
+
+	// notify change on list
+	updatedIngredientsListCopy(ingredients: Ingredient[]) {
 		this.ingredientsChanged.next(this.ingredients.slice());
 	}
 
