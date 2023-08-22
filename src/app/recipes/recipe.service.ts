@@ -35,11 +35,6 @@ export class RecipeService {
 
   private recipes: Recipe[] = []
 
-  // ngOnInit(): void {
-  //   const recip = this.dataStorage.fetchRecipes();
-  //   this.recipes.push(...recip)
-  // }
-
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes
     this.refreshRecipesListChanged()
