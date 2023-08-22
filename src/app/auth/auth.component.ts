@@ -8,7 +8,9 @@ import { AuthService } from './auth.service';
   styleUrls: ['auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  isLoginMode = true;
+  isLoginMode = true
+  isLoading = false
+  error: String = null
 
   constructor(
     private auth: AuthService
@@ -27,18 +29,22 @@ export class AuthComponent implements OnInit {
     const email = form.value.email
     const password = form.value.password
 
+    this.isLoading = true
+
     if (this.isLoginMode) {
     } else {
       this.auth.signup(email, password).subscribe(
         reponse => {
-          console.log(reponse);
+          // console.log(reponse);
+          this.isLoading = false
         },
         error => {
-          console.log(error)
+          // console.log(error)
+          this.error = 'An error ocurred'
+          this.isLoading = false
         }
       )
     }
-
 
     form.reset()
   }
