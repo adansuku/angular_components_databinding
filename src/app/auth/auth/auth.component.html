@@ -14,8 +14,14 @@
 					id="email">
 			</div>
 			<div class="mb2">
-				<button class="btn btn-primary">Sign up</button> |
-				<button class="btn btn-primary">Switch to login</button>
+				<button class="btn btn-primary">
+					{{ isLoginMode ? "Login" : "Register"}}
+				</button> |
+				<button class="btn btn-primary"
+					type="button"
+					(click)="onSwitchMode()">
+					Switch to {{ isLoginMode ? "Register " : "Login"}}
+				</button>
 			</div>
 		</form>
 	</div>
