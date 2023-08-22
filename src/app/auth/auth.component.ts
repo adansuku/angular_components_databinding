@@ -35,12 +35,11 @@ export class AuthComponent implements OnInit {
     } else {
       this.auth.signup(email, password).subscribe(
         reponse => {
-          // console.log(reponse);
           this.isLoading = false
         },
-        error => {
-          // console.log(error)
-          this.error = 'An error ocurred'
+        errorMessage => {
+          console.log(errorMessage);
+          this.error = errorMessage;
           this.isLoading = false
         }
       )
