@@ -15,13 +15,15 @@ export class HeaderComponent {
   }
 
   onSaveData() {
-    this.dataStorage.storeRecipes()
+    this.dataStorage.storeRecipes().subscribe(response => {
+      console.log(response)
+    })
     // DataStorageService.subscribe(response => {
     //   console.log(response)
     // })
   }
 
   onFetchData() {
-    this.dataStorage.fetchRecipes()
+    this.dataStorage.fetchRecipes().subscribe()
   }
 }
