@@ -1,33 +1,44 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { EventEmitter, Injectable, OnInit } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { Recipe } from "./recipe.model";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
+import { DataStorageService } from "../shared/data-storage.service";
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>()
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'A Test Recipe',
-      'This is simply a test',
-      'https://recetinas.com/wp-content/uploads/2018/07/bocadillo-caprese-casero.jpg',
-      [
-        new Ingredient('meet', 1),
-        new Ingredient('cheese', 2)
-      ]),
-    new Recipe(
-      'A Test Recipe2',
-      'This is simply a test',
-      'https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/w_1000,h_684,c_limit/the-ultimate-hamburger.jpg',
-      [
-        new Ingredient('ham', 3),
-        new Ingredient('chocolate', 2)
-      ])
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'A Test Recipe',
+  //     'This is simply a test',
+  //     'https://recetinas.com/wp-content/uploads/2018/07/bocadillo-caprese-casero.jpg',
+  //     [
+  //       new Ingredient('meet', 1),
+  //       new Ingredient('cheese', 2)
+  //     ]),
+  //   new Recipe(
+  //     'A Test Recipe2',
+  //     'This is simply a test',
+  //     'https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/w_1000,h_684,c_limit/the-ultimate-hamburger.jpg',
+  //     [
+  //       new Ingredient('ham', 3),
+  //       new Ingredient('chocolate', 2)
+  //     ])
+  // ];
 
-  constructor(private shopingListService: ShoppingListService) { }
+  constructor(
+    private shopingListService: ShoppingListService,
+    // private dataStorage: DataStorageService
+  ) { }
+
+  private recipes: Recipe[] = []
+
+  // ngOnInit(): void {
+  //   const recip = this.dataStorage.fetchRecipes();
+  //   this.recipes.push(...recip)
+  // }
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes
