@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -26,18 +26,7 @@ export class AuthService {
 				email: email,
 				password: password,
 				returnSecureToken: true
-			}).pipe(catchError(errorRes => {
-				let errorMessage = "Error"
-				if (!errorRes.error || !errorRes.error.error) {
-					return throwError(errorMessage);
-				} else {
-					switch (errorRes.error.error.message) {
-						case "EMAIL_EXISTS":
-							errorMessage = 'This email exist...'
-					}
-					return throwError(errorMessage)
-				}
-			}));
+			}).pipe(catchError(this.handleError))
 	}
 
 	login(email: string, password: string) {
@@ -47,8 +36,38 @@ export class AuthService {
 				password: password,
 				returnSecureToken: true
 			}
-		)
+		).pipe(catchError(this.handleError))
 
+	}
+
+	private handleError(errorRes: HttpErrorResponse) {
+		let errorMessage = "Error"
+		console.log(errorRes.error)
+		if (!errorRes.error || !errorRes.error.error) {
+			return throwError(errorMessage);
+		} else {
+			switch (errorRes.error.error.message) {
+				case "TOO_MANY_ATTEMPTS_TRY_LATER":
+					errorMessage = "Too many attempts try later please"
+					break
+				case "OPERATION_NOT_ALLOWED":
+					errorMessage = ": Operation not allowed."
+					break
+				case "EMAIL_EXISTS":
+					errorMessage = 'This email exist...'
+					break
+				case "EMAIL_NOT_FOUND":
+					errorMessage = 'This email NOT exist...'
+					break
+				case "INVALID_PASSWORD":
+					errorMessage = 'This password is NOT correct...'
+					break
+				case "USER_DISABLED":
+					errorMessage = 'User disabled'
+
+			}
+			return throwError(errorMessage)
+		}
 	}
 
 }
