@@ -22,7 +22,24 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value)
+    if (!form.valid) return
+
+    const email = form.value.email
+    const password = form.value.password
+
+    if (this.isLoginMode) {
+    } else {
+      this.auth.signup(email, password).subscribe(
+        reponse => {
+          console.log(reponse);
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+
+
     form.reset()
   }
 
