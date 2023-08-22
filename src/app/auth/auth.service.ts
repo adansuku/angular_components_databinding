@@ -21,6 +21,7 @@ export class AuthService {
 	// token: string = null
 
 	userSub = new BehaviorSubject<User>(null)
+	private tokenExpirationTimer: any
 
 	constructor(
 		private http: HttpClient,
@@ -62,15 +63,59 @@ export class AuthService {
 		}))
 	}
 
+	autologin() {
+		const userData: {
+			email: string,
+			id: string,
+			_token: string,
+			_tokenExpirationDate: string
+		} = JSON.parse(localStorage.getItem('userData'))
+
+		if (!userData) return
+
+		const loadedUser = new User(
+			userData.email,
+			userData.id,
+			userData._token,
+			new Date(userData._tokenExpirationDate)
+		)
+
+		if (loadedUser.token) {
+			this.userSub.next(loadedUser)
+
+			const expirationDuration = new Date(userData._tokenExpirationDate).getTime() * 1000 - new Date().getTime()
+			this.autologout(expirationDuration)
+		}
+	}
+
+	autologout(expirationDuration: number) {
+		this.tokenExpirationTimer = setTimeout(() => {
+			this.logout()
+		}, expirationDuration)
+	}
+
 	logout() {
 		this.userSub.next(null)
 		this.router.navigate(['/auth'])
+		localStorage.removeItem('userData')
+		if (this.tokenExpirationTimer) {
+			clearTimeout(this.tokenExpirationTimer)
+		}
 	}
-	private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+
+	private handleAuthentication(
+		email: string,
+		userId: string,
+		token: string,
+		expiresIn: number
+	) {
 		const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
 		const user = new User(email, userId, token, expirationDate)
 		this.userSub.next(user)
+		this.autologout(expiresIn * 1000)
+		localStorage.setItem('userData', JSON.stringify(user))
 	}
+
 
 	private handleError(errorRes: HttpErrorResponse) {
 		let errorMessage = "Error"
