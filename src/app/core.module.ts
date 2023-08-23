@@ -15,8 +15,7 @@ import { AuthGuard } from "./auth/auth.guard";
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthIntersectorService,
 			multi: true
-		},
-
+		}
 	]
 })
 
