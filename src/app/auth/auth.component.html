@@ -4,7 +4,8 @@
 		<!-- <p>{{ error }}</p> -->
 		<app-alert [message]="error"
 			*ngIf="error"
-			(close)="onHandleError()"></app-alert>
+			(close)="onHandleError()">
+		</app-alert>
 
 		<div *ngIf="isLoading"><app-spinner></app-spinner></div>
 		<form #authFormy="ngForm"
