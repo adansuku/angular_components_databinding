@@ -16,3 +16,7 @@
 	padding: 16px;
 	background: white
 }
+
+.alert-box-actions {
+	text-align: right;
+}
