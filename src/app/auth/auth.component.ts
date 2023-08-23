@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AlertComponent } from '../shared/alert/alert.component';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +18,8 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
   ngOnInit(): void {
@@ -43,13 +46,12 @@ export class AuthComponent implements OnInit {
 
     authObs.subscribe(
       response => {
-        console.log(response)
         this.router.navigate(['/recipes'])
         this.isLoading = false
       },
       errorMessage => {
-        console.log(errorMessage);
         this.error = errorMessage;
+        this.showErrorAlert(errorMessage);
         this.isLoading = false
       }
     )
@@ -61,5 +63,11 @@ export class AuthComponent implements OnInit {
     this.error = null
   }
 
+  private showErrorAlert(message: String) {
+    // cons alertComp = new AlertComponent() // it doesn´t work with angular
+    const alertComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      AlertComponent
+    )
+  }
 
 }
