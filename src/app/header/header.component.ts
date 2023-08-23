@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() selectedFeature = new EventEmitter<string>();
   private sub: Subscription
-  private newUserSub: Subscription
+  private newcurrentUser: Subscription
   isAuthenticated = false
 
   constructor(
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.newUserSub = this.authService.userSub.subscribe(user => {
+    this.newcurrentUser = this.authService.currentUser.subscribe(user => {
       this.isAuthenticated = !!user
       // console.log(!user)
       // console.log(!!user)
@@ -42,6 +42,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe()
-    this.newUserSub.unsubscribe()
+    this.newcurrentUser.unsubscribe()
   }
 }

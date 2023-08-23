@@ -20,6 +20,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthIntersectorService } from './auth/auth-intersector.service';
+import { AuthGuard } from './auth/auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,8 @@ import { AuthIntersectorService } from './auth/auth-intersector.service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthIntersectorService,
       multi: true
-    }
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
