@@ -5,16 +5,46 @@ import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-auth',
   templateUrl: 'auth.component.html',
-  styleUrls: ['auth.component.css']
+  styleUrls: ['auth.component.css'],
+  animations: [
+    trigger('divState', [
+      state('normal', style({
+        backgroundColor: 'red',
+        transform: 'translateX(0)',
+
+      })),
+      state('highlight', style({
+        backgroundColor: 'yellow',
+        transform: 'translateX(100px)'
+      })),
+      transition('normal <=> highlight', animate(300))
+    ]),
+    trigger('wildState', [
+      state('normal', style({
+        backgroundColor: 'red',
+        transform: 'translateX(0)',
+
+      })),
+      state('highlight', style({
+        backgroundColor: 'green',
+        transform: 'translateX(100px) scale(0.5)'
+      })),
+      transition('normal <=> highlight', animate(300)),
+    ])
+  ]
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true
   isLoading = false
   error: String = null
+
+  state = 'normal'
+  wildstate: string = 'normal'
 
   constructor(
     private auth: AuthService,
@@ -27,6 +57,9 @@ export class AuthComponent implements OnInit {
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode
+    this.state = this.state == 'highlight' ? 'normal' : 'highlight'
+    this.wildstate = this.state == 'highlight' ? 'normal' : 'highlight'
+
   }
 
   onSubmit(form: NgForm) {
@@ -71,3 +104,7 @@ export class AuthComponent implements OnInit {
   }
 
 }
+function triger(arg0: string, arg1: undefined[]): any {
+  throw new Error('Function not implemented.');
+}
+
